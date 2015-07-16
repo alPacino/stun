@@ -65,8 +65,8 @@
 	 realm = <<"">>                 :: binary(),
 	 key = {<<"">>, <<"">>, <<"">>} :: {binary(), binary(), binary()},
 	 server_name = <<"">>           :: binary(),
-	 permissions = ?DICT:new()      :: dict(),
-	 channels = ?DICT:new()         :: dict(),
+	 permissions = ?DICT:new()      :: ?DICT:dict(),
+	 channels = ?DICT:new()         :: ?DICT:dict(),
 	 max_permissions                :: non_neg_integer() | atom(),
 	 relay_ip = {127,0,0,1}         :: inet:ip_address(),
 	 min_port = 49152               :: non_neg_integer(),
@@ -118,7 +118,7 @@ init([Opts]) ->
 	    ok
     end,
     TRef = erlang:start_timer(?DEFAULT_LIFETIME, self(), stop),
-    {A1, A2, A3} = now(),
+    {A1, A2, A3} = os:timestamp(),
     random:seed(A1, A2, A3),
     case turn_sm:add_allocation(AddrPort, Username, Realm, MaxAllocs, self()) of
 	ok ->
